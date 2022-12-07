@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Booking List</title>
+</head>
+
+<body background="{% static 'img/bg.jpg' %}" style="background-size: cover;">
+
+    <nav class="navbar navbar-expand-lg fixed-top navbarScroll" style="background: transparent;">
+        <div class="container" style="margin-left: auto;">
+            <a class="navbar-brand" href="#"> <h3 style= "font-size:40px "><img src="{% static 'img/pngegg.png' %}"></h3></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#home"><h3 style="font-size :25px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: whitesmoke;">Home</h3></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'userauth:logout' %}"><h3 style="font-size :25px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: whitesmoke;">Logout</h3></a>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+
+<section id="home">
+<div class="container">
+
+    <div class="row">
+
+        <div class="col">
+
+            <div class="row" style="padding-bottom: 50px;">
+
+                <form class="form-inline" action="/addvenueItem/" method = "post">
+                    {% csrf_token %}
+
+                    <div class="row" style="padding-top: 220px; padding-left: 190px;" >
+
+                        <div class="col-2" style="margin-top: 24px;">
+
+                            <div class="form-group mx-sm-3 mb-2">
+
+                                <select name="priority" class="form-select" aria-label="Default select example">
+                                    <option value="Sound Sys" selected>Sound Sys</option>
+                                    <option value="Sound and Lights">Sound and Lights</option>
+                                    <option value="Just Floor">Just Floor</option>
+                                    <option value="For Long Durations">For long durations</option>
+    
+                                  </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group mx-sm-3 mb-2">
+
+                                <label for="content" class="sr-only"></label>
+
+                                <input type="text" class="form-control" name="content" placeholder="Type your wanted Venue....">
+
+                              </div>
+
+                        </div>
+
+                        <div class="col-4" style="margin-top: 25px;">
+
+                            <button type="submit" class="btn btn-primary mb-2">Add Venue</button>
+
+                        </div>
+
+                    </div>
+                    
+                  </form>
+            </div>
+
+            <div class="row" style="margin-left: 250px;">
+                <div class="col-2">
+                    <h3><mark>Requirement</mark></h3>
+                </div>
+
+                <div class="col-2" style="margin-left: 60px;">
+                    <h3><mark>Location</mark></h3>
+                </div>
+
+                <div class="col-2" style="margin-left: 50px; width:auto">
+                    <h3><mark>Booking Date</mark></h3>
+                </div>
+            </div>
+
+
+            {% for i in all_items %} 
+
+            <div class="row" style="padding-left: 150px; ">
+
+                <div class="col-1"></div>
+
+                <div class="col-8">
+
+                    <div class="card  text-white bg-dark mb-3" style="margin-bottom: 0.5rem!important; width: auto;">
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+
+                                <div class="col-4">
+                                    {{i.priority}}
+                                </div>
+
+                                <div class="col-4">
+                                    {{i.content}}
+                                </div>
+
+                                <div class="col-4">
+                                    {{i.dateof}}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                      </div>
+
+                </div>
+
+                <div class="col-2">
+
+                    <form action="/deleteVenueItem/{{i.id}}/" method = "post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          
+                            </svg></i>
+
+                        </button>
+
+            </form> 
+                </div>
+                <div class="col-3"></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+</div>
+</section>
+
+
+    
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>    
+</body>
+</html>
