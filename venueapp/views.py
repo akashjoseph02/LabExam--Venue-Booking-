@@ -23,8 +23,6 @@ def VenueView(request):
 
 @login_required(login_url='/login')
 def addvenueView(request):
-    # x = request.POST.get('todotext')
-
     user_email = request.user.email
     new_item = VenueList()
     new_item.user = user_email
